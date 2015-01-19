@@ -12,30 +12,22 @@
  */
 
 
-
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
 
 function tfc_add_custom_meta_box() {
-
 	$screens = array( 'post', 'page' );
-
 	foreach ( $screens as $screen ) {
-
 		add_meta_box(
-
 			'tfc_section_id',
 			__( 'Custom Meta Box : Messages', 'tfc_textdomain' ),
 			'tfc_custom_meta_box_callback',	
 			$screen
-
 		);
 	}
 }
-
 add_action( 'add_meta_boxes', 'tfc_add_custom_meta_box' );
-
 
 /**
  * Prints the box content.
@@ -62,13 +54,11 @@ function tfc_custom_meta_box_callback( $post ) {
 	echo '</label> ';
 	echo '<input type="text" id="tfc_message_speaker" name="tfc_message_speaker" value="' . esc_attr( $message_speaker ) . '" size="30" />';
 	echo '<br/>';	
-
 	echo '<label style="text-align:left;;width:220px;float:left;padding-top:5px;" class="tfc_message" for="tfc_message">';
 	_e( 'Date: (Format: Dec 20, 2014) ', 'tfc_textdomain' );
 	echo '</label> ';
 	echo '<input type="text" id="tfc_message_date" name="tfc_message_date" value="' . esc_attr( $message_date ) . '" size="30" />';
 	echo '<br/>';
-
 	echo '<label style="text-align:left;;width:220px;float:left;padding-top:5px;" class="tfc_message" for="tfc_message">';
 	_e( 'Length: (Format: 00:18:55) ', 'tfc_textdomain' );
 	echo '</label> ';
@@ -141,7 +131,6 @@ function tfc_save_meta_box_data( $post_id ) {
 add_action( 'save_post', 'tfc_save_meta_box_data' );
 
 
-
 // short codes!!!!
 
 function show_tfc_message_speaker($atts, $content = NULL) {
@@ -170,4 +159,3 @@ function show_tfc_message_length($atts, $content = NULL) {
 	return $message_length;
 }
 add_shortcode ('show_custom_length', 'show_tfc_message_length');
-
