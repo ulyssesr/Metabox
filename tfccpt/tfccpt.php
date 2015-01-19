@@ -45,23 +45,23 @@ function tfc_custom_meta_box_callback( $post ) {
 	 * from the database and use the value for the form.
 	 */
 
-	$message_speaker 		= get_post_meta( $post->ID, '_my_meta_value_speaker_key', true );
-	$message_date 			= get_post_meta( $post->ID, '_my_meta_value_date_key', true );
-	$message_length 		= get_post_meta( $post->ID, '_my_meta_value_length_key', true );
+	$message_speaker = get_post_meta( $post->ID, '_my_meta_value_speaker_key', true );
+	$message_date = get_post_meta( $post->ID, '_my_meta_value_date_key', true );
+	$message_length = get_post_meta( $post->ID, '_my_meta_value_length_key', true );
 
 	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Speaker: ', 'tfc_textdomain' );
-	echo '</label> ';
+	echo '</label>';
 	echo '<input type="text" id="tfc_message_speaker" name="tfc_message_speaker" value="' . esc_attr( $message_speaker ) . '" size="30" />';
 	echo '<br/>';	
 	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Date: (Format: Dec 20, 2014) ', 'tfc_textdomain' );
-	echo '</label> ';
+	echo '</label>';
 	echo '<input type="text" id="tfc_message_date" name="tfc_message_date" value="' . esc_attr( $message_date ) . '" size="30" />';
 	echo '<br/>';
 	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Length: (Format: 00:18:55) ', 'tfc_textdomain' );
-	echo '</label> ';
+	echo '</label>';
 	echo '<input type="text" id="tfc_message_length" name="tfc_message_length" value="' . esc_attr( $message_length ) . '" size="30" />';
 	echo '<br/><br/>';
 
@@ -139,7 +139,7 @@ function show_tfc_message_speaker($atts, $content = NULL) {
 
 	global $post;
 	extract (shortcode_atts(array('param' => '',),$atts));
-	$message_speaker 		= get_post_meta( $post->ID, '_my_meta_value_speaker_key', true );
+	$message_speaker = get_post_meta( $post->ID, '_my_meta_value_speaker_key', true );
 	return $message_speaker;
 }
 add_shortcode ('show_custom_speaker', 'show_tfc_message_speaker');
@@ -148,7 +148,7 @@ function show_tfc_message_date($atts, $content = NULL) {
 
 	global $post;
 	extract (shortcode_atts(array('param' => '',),$atts));
-	$message_date 		= get_post_meta( $post->ID, '_my_meta_value_date_key', true );
+	$message_date = get_post_meta( $post->ID, '_my_meta_value_date_key', true );
 	return $message_date;
 }
 add_shortcode ('show_custom_date', 'show_tfc_message_date');
@@ -157,7 +157,7 @@ function show_tfc_message_length($atts, $content = NULL) {
 
 	global $post;
 	extract (shortcode_atts(array('param' => '',),$atts));
-	$message_length 		= get_post_meta( $post->ID, '_my_meta_value_length_key', true );
+	$message_length = get_post_meta( $post->ID, '_my_meta_value_length_key', true );
 	return $message_length;
 }
 add_shortcode ('show_custom_length', 'show_tfc_message_length');
