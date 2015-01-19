@@ -49,23 +49,39 @@ function tfc_custom_meta_box_callback( $post ) {
 	$message_date 			= get_post_meta( $post->ID, '_my_meta_value_date_key', true );
 	$message_length 		= get_post_meta( $post->ID, '_my_meta_value_length_key', true );
 
-	echo '<label style="text-align:left;;width:220px;float:left;padding-top:5px;" class="tfc_message" for="tfc_message">';
+	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Speaker: ', 'tfc_textdomain' );
 	echo '</label> ';
 	echo '<input type="text" id="tfc_message_speaker" name="tfc_message_speaker" value="' . esc_attr( $message_speaker ) . '" size="30" />';
 	echo '<br/>';	
-	echo '<label style="text-align:left;;width:220px;float:left;padding-top:5px;" class="tfc_message" for="tfc_message">';
+	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Date: (Format: Dec 20, 2014) ', 'tfc_textdomain' );
 	echo '</label> ';
 	echo '<input type="text" id="tfc_message_date" name="tfc_message_date" value="' . esc_attr( $message_date ) . '" size="30" />';
 	echo '<br/>';
-	echo '<label style="text-align:left;;width:220px;float:left;padding-top:5px;" class="tfc_message" for="tfc_message">';
+	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Length: (Format: 00:18:55) ', 'tfc_textdomain' );
 	echo '</label> ';
 	echo '<input type="text" id="tfc_message_length" name="tfc_message_length" value="' . esc_attr( $message_length ) . '" size="30" />';
 	echo '<br/><br/>';
 
 }
+
+// add style to the admin dashboard
+
+function tfc_custom_labels() {
+	?>
+  <style type="text/css">
+  .tfc_message {
+  	float:left;
+		text-align:left;
+  	width:220px;
+  	padding-top:5px;
+  } 
+  </style>
+  <?php
+}
+add_action('admin_head', 'tfc_custom_labels');
 
 /**
  * When the post is saved, saves our custom data.
@@ -81,32 +97,19 @@ function tfc_save_meta_box_data( $post_id ) {
 	 */
 
 	// Check if our nonce is set.
-	if ( ! isset( $_POST['tfc_custom_meta_box_nonce'] ) ) {
-		return;
-	}
+	if ( ! isset( $_POST['tfc_custom_meta_box_nonce'] ) ) { return; }
 
 	// Verify that the nonce is valid.
-	if ( ! wp_verify_nonce( $_POST['tfc_custom_meta_box_nonce'], 'tfc_custom_meta_box' ) ) {
-		return;
-	}
+	if ( ! wp_verify_nonce( $_POST['tfc_custom_meta_box_nonce'], 'tfc_custom_meta_box' ) ) { return; }
 
 	// If this is an autosave, our form has not been submitted, so we don't want to do anything.
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return; }
 
 	// Check the user's permissions.
 	if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
-
-		if ( ! current_user_can( 'edit_page', $post_id ) ) {
-			return;
-		}
-
+		if ( ! current_user_can( 'edit_page', $post_id ) ) { return; }
 	} else {
-
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			return;
-		}
+		if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
 	}
 
 	/* OK, it's safe for us to save the data now. */
@@ -127,7 +130,6 @@ function tfc_save_meta_box_data( $post_id ) {
 	update_post_meta( $post_id, '_my_meta_value_length_key', $my_tfc_message_length);
 
 }
-
 add_action( 'save_post', 'tfc_save_meta_box_data' );
 
 
