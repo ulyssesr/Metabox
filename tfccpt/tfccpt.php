@@ -120,9 +120,9 @@ function tfc_save_meta_box_data( $post_id ) {
 	if ( ! isset( $_POST['tfc_message_length'] ) ) { return; }
 
 	// Sanitize user input.
-	$my_tfc_message_speaker 	= sanitize_text_field( $_POST['tfc_message_speaker'] );
-	$my_tfc_message_date 			= sanitize_text_field( $_POST['tfc_message_date'] );
-	$my_tfc_message_length 		= sanitize_text_field( $_POST['tfc_message_length'] );
+	$my_tfc_message_speaker = sanitize_text_field( $_POST['tfc_message_speaker'] );
+	$my_tfc_message_date = sanitize_text_field( $_POST['tfc_message_date'] );
+	$my_tfc_message_length = sanitize_text_field( $_POST['tfc_message_length'] );
 
 	// Update the meta field in the database.
 	update_post_meta( $post_id, '_my_meta_value_speaker_key', $my_tfc_message_speaker );
