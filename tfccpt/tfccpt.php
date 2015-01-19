@@ -74,7 +74,7 @@ function tfc_custom_labels() {
   <style type="text/css">
   .tfc_message {
   	float:left;
-		text-align:left;
+  	text-align:left;
   	width:220px;
   	padding-top:5px;
   } 
