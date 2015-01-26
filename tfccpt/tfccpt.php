@@ -21,7 +21,7 @@ function tfc_add_custom_meta_box() {
 	foreach ( $screens as $screen ) {
 		add_meta_box(
 			'tfc_section_id',
-			__( 'Custom Meta Box : Messages', 'tfc_textdomain' ),
+			__( 'Custom Meta Box : ', 'tfc_textdomain' ),
 			'tfc_custom_meta_box_callback',	
 			$screen
 		);
@@ -47,22 +47,32 @@ function tfc_custom_meta_box_callback( $post ) {
 
 	$message_speaker = get_post_meta( $post->ID, '_my_meta_value_speaker_key', true );
 	$message_date = get_post_meta( $post->ID, '_my_meta_value_date_key', true );
-	$message_length = get_post_meta( $post->ID, '_my_meta_value_length_key', true );
+	$message_description = get_post_meta( $post->ID, '_my_meta_value_description_key', true );
+	$article_author = get_post_meta( $post->ID, '_my_meta_value_author_key', true );
+
 
 	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Speaker: ', 'tfc_textdomain' );
 	echo '</label>';
 	echo '<input type="text" id="tfc_message_speaker" name="tfc_message_speaker" value="' . esc_attr( $message_speaker ) . '" size="30" />';
 	echo '<br/>';	
+	
 	echo '<label class="tfc_message" for="tfc_message">';
 	_e( 'Date: (Format: Dec 20, 2014) ', 'tfc_textdomain' );
 	echo '</label>';
 	echo '<input type="text" id="tfc_message_date" name="tfc_message_date" value="' . esc_attr( $message_date ) . '" size="30" />';
 	echo '<br/>';
+
 	echo '<label class="tfc_message" for="tfc_message">';
-	_e( 'Length: (Format: 00:18:55) ', 'tfc_textdomain' );
+	_e( 'Author: ', 'tfc_textdomain' );
 	echo '</label>';
-	echo '<input type="text" id="tfc_message_length" name="tfc_message_length" value="' . esc_attr( $message_length ) . '" size="30" />';
+	echo '<input type="text" id="tfc_article_author" name="tfc_article_author" value="' . esc_attr( $article_author ) . '" size="30" />';
+	echo '<br/>';
+
+	echo '<label class="tfc_message" for="tfc_message">';
+	_e( 'Message Description: ', 'tfc_textdomain' );
+	echo '</label>';
+	echo '<textarea rows="4" cols="50" id="tfc_message_description" name="tfc_message_description">'. esc_attr( $message_description ) . '</textarea>';
 	echo '<br/><br/>';
 
 }
@@ -117,17 +127,21 @@ function tfc_save_meta_box_data( $post_id ) {
 	// Make sure that it is set.
 	if ( ! isset( $_POST['tfc_message_speaker'] ) ) { return; }
 	if ( ! isset( $_POST['tfc_message_date'] ) ) { return; }
-	if ( ! isset( $_POST['tfc_message_length'] ) ) { return; }
+	if ( ! isset( $_POST['tfc_article_author'] ) ) { return; }
+	if ( ! isset( $_POST['tfc_message_description'] ) ) { return; }
+
 
 	// Sanitize user input.
 	$my_tfc_message_speaker = sanitize_text_field( $_POST['tfc_message_speaker'] );
 	$my_tfc_message_date = sanitize_text_field( $_POST['tfc_message_date'] );
-	$my_tfc_message_length = sanitize_text_field( $_POST['tfc_message_length'] );
+	$my_tfc_article_author = sanitize_text_field( $_POST['tfc_article_author'] );
+	$my_tfc_message_description = sanitize_text_field( $_POST['tfc_message_description'] );	
 
 	// Update the meta field in the database.
 	update_post_meta( $post_id, '_my_meta_value_speaker_key', $my_tfc_message_speaker );
 	update_post_meta( $post_id, '_my_meta_value_date_key', $my_tfc_message_date);
-	update_post_meta( $post_id, '_my_meta_value_length_key', $my_tfc_message_length);
+	update_post_meta( $post_id, '_my_meta_value_author_key', $my_tfc_article_author);
+	update_post_meta( $post_id, '_my_meta_value_description_key', $my_tfc_message_description);	
 
 }
 add_action( 'save_post', 'tfc_save_meta_box_data' );
@@ -153,11 +167,20 @@ function show_tfc_message_date($atts, $content = NULL) {
 }
 add_shortcode ('show_custom_date', 'show_tfc_message_date');
 
-function show_tfc_message_length($atts, $content = NULL) {
+function show_tfc_article_author($atts, $content = NULL) {
 
 	global $post;
 	extract (shortcode_atts(array('param' => '',),$atts));
-	$message_length = get_post_meta( $post->ID, '_my_meta_value_length_key', true );
-	return $message_length;
+	$article_author = get_post_meta( $post->ID, '_my_meta_value_author_key', true );
+	return $article_author;
 }
-add_shortcode ('show_custom_length', 'show_tfc_message_length');
+add_shortcode ('show_article_author', 'show_tfc_article_author');
+
+function show_tfc_message_description($atts, $content = NULL) {
+
+	global $post;
+	extract (shortcode_atts(array('param' => '',),$atts));
+	$message_description = get_post_meta( $post->ID, '_my_meta_value_description_key', true );
+	return $message_description;
+}
+add_shortcode ('show_message_description', 'show_tfc_message_description');
