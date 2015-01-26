@@ -21,7 +21,7 @@ function tfc_add_custom_meta_box() {
 	foreach ( $screens as $screen ) {
 		add_meta_box(
 			'tfc_section_id',
-			__( 'Custom Meta Box : ', 'tfc_textdomain' ),
+			__( 'Custom Meta Box', 'tfc_textdomain' ),
 			'tfc_custom_meta_box_callback',	
 			$screen
 		);
