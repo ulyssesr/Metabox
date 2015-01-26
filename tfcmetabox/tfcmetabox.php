@@ -58,7 +58,7 @@ function tfc_custom_meta_box_callback( $post ) {
 	echo '<br/>';	
 	
 	echo '<label class="tfc_message" for="tfc_message">';
-	_e( 'Date: (Format: Dec 20, 2014) ', 'tfc_textdomain' );
+	_e( 'Date: (Format: Dec 20, 2015) ', 'tfc_textdomain' );
 	echo '</label>';
 	echo '<input type="text" id="tfc_message_date" name="tfc_message_date" value="' . esc_attr( $message_date ) . '" size="30" />';
 	echo '<br/>';
